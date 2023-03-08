@@ -1,0 +1,16 @@
+{
+  "name": "electron-test",
+  "version": "1.0.0",
+  "description": "electron project to test electron features",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "coconutse",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
+    "electron": "^23.1.3"
+  }
+}
