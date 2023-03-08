@@ -11,19 +11,22 @@ var shift = 700
 var shiftWindowLeft = screenWidth - shift
 var shiftWindowTop = 0
 
+var windowOpacity = 1
+
 const createWindow = () => {
     const win = new BrowserWindow({
         width: windowWidth,
         height: windowHeight,
         transparent: true,
-        backgroundColor: '#ee21262e',
-        resizable: true,
+        backgroundColor: '#21262e',
+        resizable: false,
         transparent: true,
-        frame: true,
+        opacity: windowOpacity,
+        frame: false,
         x: shiftWindowLeft,
         y: shiftWindowTop,
         hasShadow: true,
-        alwaysOnTop: true,
+        alwaysOnTop: false,
         skipTaskbar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -32,6 +35,8 @@ const createWindow = () => {
     })
 
     win.loadFile('index.html')
+
+    // activate dev tools 
     win.webContents.openDevTools()
 
     win.webContents.on('dom-ready', () => {
@@ -39,6 +44,9 @@ const createWindow = () => {
             fs.readFileSync(path.join(__dirname, 'css', 'primaryWindow.css'), 'utf8')
         )
     })
+
+    //tests
+    console.log(win.webContents)
 }
 
 app.whenReady().then(() => {

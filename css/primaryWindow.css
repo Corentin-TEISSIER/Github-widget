@@ -1,4 +1,19 @@
 body {
-    border-bottom-left-radius: 100%;
-    border-bottom-right-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    color: white;
+    font-size: 50%;
+    margin: 0px;
+}
+
+body #username-main-title{
+    display: flex;
+    margin-block-end: 0em;
+    margin-block-start: 0em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-overflow: ellipsis;
 }
