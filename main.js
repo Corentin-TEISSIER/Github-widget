@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen } = require('electron')
+const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -33,6 +33,14 @@ const createWindow = () => {
             nodeIntegration: true
         }
     })
+
+    //Renderer event listener
+    ipcMain.on('activate', (event,size) => {
+        const webContents = event.sender
+        const win = BrowserWindow.fromWebContents(webContents)
+        win.
+    })
+
 
     win.loadFile('index.html')
 
