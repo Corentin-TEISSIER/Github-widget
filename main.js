@@ -1,6 +1,7 @@
-const { app, BrowserWindow, screen, ipcMain } = require('electron')
+const { app, BrowserWindow, screen, Menu, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
+
 
 // usefull values (try to set up when first window is ready)
 var screenWidth = 0
@@ -13,13 +14,37 @@ var shiftWindowTop = 0
 
 var windowOpacity = 1
 
+// usefull functions
+const resizeWindow = (win, size, duration) => {
+    const startSize = win.getSize();
+    const targetSize = [size.x, size.y];
+
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const newSize = [
+            Math.floor(startSize[0] + (targetSize[0] - startSize[0]) * progress),
+            Math.floor(startSize[1] + (targetSize[1] - startSize[1]) * progress),
+        ];
+        win.setSize(newSize[0], newSize[1]);
+
+        if (progress === 1) {
+            clearInterval(interval);
+        }
+    }, 1);
+}
+
+
 const createWindow = () => {
-    const win = new BrowserWindow({
+    var win = new BrowserWindow({
         width: windowWidth,
         height: windowHeight,
         transparent: true,
         backgroundColor: '#21262e',
-        resizable: false,
+        resizable: true,
         transparent: true,
         opacity: windowOpacity,
         frame: false,
@@ -34,16 +59,17 @@ const createWindow = () => {
         }
     })
 
-    //Renderer event listener
-    ipcMain.on('activate', (event,size) => {
-        const webContents = event.sender
-        const win = BrowserWindow.fromWebContents(webContents)
-        win.
-    })
-
-
     win.loadFile('index.html')
 
+    //IPC
+    ipcMain.on("ipc-renderer-to-main-connected", (event, args) => {
+        console.log(args)
+    })
+    ipcMain.on("resize-window", (event,size) => {
+        //win.setSize(size.x, size.y)
+        resizeWindow(win,size,250)
+    })
+  
     // activate dev tools 
     win.webContents.openDevTools()
 
@@ -54,7 +80,6 @@ const createWindow = () => {
     })
 
     //tests
-    console.log(win.webContents)
 }
 
 app.whenReady().then(() => {
@@ -83,4 +108,6 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
+
+
 

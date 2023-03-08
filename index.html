@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
     <title>Main index html</title>
   </head>
   <body>
@@ -12,5 +12,7 @@
         USERNAME
       </h1>
     </div>
+
+    <script type="text/javascript" src="renderer.js"></script>
   </body>
 </html>
