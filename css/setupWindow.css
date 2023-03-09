@@ -1,0 +1,81 @@
+:root{
+    --bg-color-darker-2: #01060e;
+    --bg-color-darker-1: #11161e;
+    --bg-color: #21262e;
+    --bg-color-lighter: #31363e;
+    --purple-0: #6e5494;
+    --purple-1: #4e3474;
+    --gh-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+}
+
+input:focus-visible{
+    outline-offset: none;
+}
+
+:focus-visible{
+    outline: none;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+#setup-username{
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--bg-color-lighter);
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-weight: bold;
+
+    border-radius: 15px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#separation-mark{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#fillin-area-git-username{
+    background-color: var(--bg-color-lighter);
+    border: none;
+    appearance: none;
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-weight: bold;
+
+    font-size: 1.05em;
+}
+
+
+#set-git-data-up{
+    display: inline-flex;
+
+    background-color: var(--bg-color-darker-2);
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-size: 1.1em;
+    font-weight: bold;
+
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    margin-top: 15%;
+
+}
+
+#set-git-data-up:hover{
+    background-color: var(--bg-color-darker-1);
+}

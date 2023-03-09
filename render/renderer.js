@@ -42,10 +42,15 @@ isConnected(connected)
 // Git setup connection 
 const signinButton = document.getElementById("connection-button")
 signinButton.addEventListener("click", async () => {
-    const isSetupWindowOpen = await window.api.OpenGitSetUpWidow()
+    const gitData = await window.api.OpenGitSetUpWidow()
 
-    isSetupWindowOpen? console.log("Setup window opened") : console.log("Setup window #error")
+    document.getElementById("git-account-username-label").innerHTML = gitData
+    document.getElementById("bar-label").style.display = "flex"
+    document.getElementById("connection-button").style.display = "none"
+    
 })
+
+
 
 
 // tests

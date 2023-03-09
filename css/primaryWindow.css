@@ -1,8 +1,16 @@
+:root{
+    --bg-color: #21262e;
+    --purple-0: #6e5494;
+    --purple-1: #4e3474;
+    --gh-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+}
+
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-family: var(--gh-font-family);
     color: white;
     font-size: 50%;
     margin: 0px;
@@ -33,8 +41,8 @@ body #bar-label{
 body #connection-button{
     display: flex;
     border-radius: 15px;
-    background-color: #6e5494;
-    color: #21262e;
+    background-color: var(--purple-0);
+    color: var(--bg-color);
     font-size: 1.7em;
     font-weight: bold;
 
@@ -43,7 +51,7 @@ body #connection-button{
 }
 
 body #connection-button:hover{
-    background-color: #4e3474;
+    background-color: var(--purple-1);
 }
 
 body #git-account-username-label{
