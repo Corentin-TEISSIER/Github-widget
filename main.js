@@ -58,20 +58,27 @@ const createWindow = () => {
         alwaysOnTop: false,
         skipTaskbar: true,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload/preload.js'),
             nodeIntegration: true
         }
     })
 
-    win.loadFile('index.html')
+    win.loadFile('pages/index.html')
 
-    //IPC
+    //IPC on
     ipcMain.on("ipc-renderer-to-main-connected", (event, args) => {
         console.log(args)
     })
     ipcMain.on("resize-window", (event,size) => {
         //win.setSize(size.x, size.y)
         resizeWindow(win,size,250)
+    })
+
+    //IPC handle
+    ipcMain.handle("open-git-setup-window", async (event) => {
+        createSetupWindow()
+
+        return true
     })
   
     // activate dev tools 
@@ -84,6 +91,29 @@ const createWindow = () => {
     })
 
     //tests
+}
+
+const createSetupWindow = () => {
+    var win = new BrowserWindow({
+        width: 400,
+        height: 400,
+        backgroundColor: '#21262e',
+        resizable: false,
+        frame: false,
+        center: true,
+        hasShadow: true,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload/preloadSetup.js'),
+            nodeIntegration: true
+        }
+    })
+
+    win.loadFile('pages/setup.html')
+
+    //IPC on
+    ipcMain.on("ipc-renderer-setup-to-main-connected", (event, args) => {
+        console.log(args)
+    })
 }
 
 app.whenReady().then(() => {

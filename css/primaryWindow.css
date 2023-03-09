@@ -30,7 +30,7 @@ body #bar-label{
     text-overflow: ellipsis;
 }
 
-body .connection-button{
+body #connection-button{
     display: flex;
     border-radius: 15px;
     background-color: #6e5494;
@@ -42,7 +42,7 @@ body .connection-button{
     margin: 5%; 
 }
 
-body .connection-button:hover{
+body #connection-button:hover{
     background-color: #4e3474;
 }
 
