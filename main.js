@@ -4,7 +4,7 @@ const fs = require('fs')
 require('dotenv').config()
 
 //dev var
-const devToolActivate = true
+const devToolActivate = false
 
 // usefull values (try to set up when first window is ready)
     //Main window
@@ -92,6 +92,11 @@ const createWindow = () => {
         const gitData = await createSetupWindow()
         return gitData
     })
+    ipcMain.handle("is-git-data-defined", (event) => {
+        if(process.env.GIT_USERNAME){
+            return {res: true, gitData: {username: process.env.GIT_USERNAME}}}
+        else{return {res: false, gitData: {username: ""}}}
+    })
   
 
     //tests
@@ -133,6 +138,7 @@ async function createSetupWindow(){
             //TO DO: complete with token?
             process.env.GIT_USERNAME = args
             fs.writeFileSync('.env',`GIT_USERNAME=${process.env.GIT_USERNAME}`)
+            win.close()
             resolve(process.env.GIT_USERNAME)
         })
     })
