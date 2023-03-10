@@ -8,7 +8,7 @@
 
 body {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-family: var(--gh-font-family);
     color: white;
@@ -16,9 +16,9 @@ body {
     margin: 0px;
 }
 
-body.resizing {
+/* body.resizing {
     transition: height 0.5s ease-in-out;
-}
+} */
 
 body #widget-main-container{
     display: flex;
@@ -30,12 +30,25 @@ body #widget-main-container{
 
 body #bar-label{
     display: none;
+    flex-direction: row;
     margin-block-end: 0em;
     margin-block-start: 0em;
     justify-content: center;
     align-items: center;
     text-align: center;
     text-overflow: ellipsis;
+}
+
+#gears-button-container{
+    width: 18x;
+    height: 18px;
+    max-width: 18px;
+    max-height: 18px;
+}
+
+#gears-button{
+    width: 100%;
+    height: 100%;
 }
 
 body #connection-button{
