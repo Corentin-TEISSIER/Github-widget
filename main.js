@@ -178,7 +178,9 @@ app.on('window-all-closed', () => {
 // TESTS
 
 const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js')) 
-// gitAPI.initConnection(process.env.GITHUB_TOKEN)
-gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
+gitAPI.initConnection(process.env.GITHUB_TOKEN)
+//gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
+gitAPI.getUserData(process.env.GIT_USERNAME)
 gitAPI.getUserRepos(process.env.GIT_USERNAME)
+gitAPI.getCommitsHistoryFromRepo(process.env.GIT_USERNAME, "MS-labs")
 
