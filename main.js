@@ -174,3 +174,8 @@ app.on('window-all-closed', () => {
 
 
 
+// TESTS
+
+const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js')) 
+gitAPI.testOcto(process.env.GITHUB_TOKEN)
+
