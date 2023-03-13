@@ -179,8 +179,21 @@ app.on('window-all-closed', () => {
 
 const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js')) 
 gitAPI.initConnection(process.env.GITHUB_TOKEN)
-//gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
-gitAPI.getUserData(process.env.GIT_USERNAME)
-gitAPI.getUserRepos(process.env.GIT_USERNAME)
-gitAPI.getCommitsHistoryFromRepo(process.env.GIT_USERNAME, "MS-labs")
+// gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
+// gitAPI.getUserData(process.env.GIT_USERNAME)
+// gitAPI.getUserRepos(process.env.GIT_USERNAME)
+// gitAPI.getCommitsHistoryFromRepo(process.env.GIT_USERNAME, "test_repo")
+
+// const testGitAPI = async (username) => {
+//     try{
+//         const gitApiData = await gitAPI.fetchDataForApp(username)
+//         // Add test here if needed
+//     }catch(error){
+//         console.log(error)
+//     }
+// }
+// testGitAPI(process.env.GIT_USERNAME)
+
+const gitAppData = gitAPI.fetchDataForApp(process.env.GIT_USERNAME)
+console.log(gitAppData)
 

@@ -15,7 +15,7 @@ const initConnection = (token) => {
     }
 }
 
-const testOcto = async (username, token) => {
+const testOcto = async () => {
 
     try{
         await octokit.request("GET /repos/{owner}/{repo}", {
@@ -68,19 +68,38 @@ const getCommitsHistoryFromRepo = async (username, repo) => {
         repo: repo
     })
     const repoCommitsHistory = []
-    res.data.map( commits => {
+    for(let i = 0; i<res.data.length; i++){
         const commit = {
-            sha: commits.sha,
-            message: commits.commit.message,
-            api_url: commits.url,
-            html_url: commits.html_url,
-            author_name: commits.author.login,
-            committer_name: commits.committer.login
+            sha: res.data[i].sha,
+            message: res.data[i].commit.message,
+            api_url: res.data[i].url,
+            html_url: res.data[i].html_url,
+            author_name: res.data[i].commit.author.name,
+            committer_name: res.data[i].commit.committer.name
         }
         repoCommitsHistory.push(commit)
-    })
-    console.log(repoCommitsHistory)
+    }
+    return repoCommitsHistory
 }
+
+/**
+ * This function has to be called with an 'await' 
+ */
+const fetchDataForApp = async (username) => {
+    const userData = await getUserData(username)
+    const userRepos = await getUserRepos(username)
+    for(let i = 0; i<userRepos.length; i++){
+        var repoCommitsHistory
+        try{
+            repoCommitsHistory = await getCommitsHistoryFromRepo(username, userRepos[i].name)
+        }catch(error){
+            console.log(error)
+        }
+        userRepos[i].commitsHistory = repoCommitsHistory
+    }
+    return {userData: userData, userRepos: userRepos}
+}
+
 
 
 module.exports = {
@@ -88,5 +107,6 @@ module.exports = {
     testOcto,
     getUserData,
     getUserRepos,
-    getCommitsHistoryFromRepo
+    getCommitsHistoryFromRepo,
+    fetchDataForApp
 }
