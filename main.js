@@ -94,8 +94,8 @@ const createWindow = () => {
     })
     ipcMain.handle("is-git-data-defined", (event) => {
         if(process.env.GIT_USERNAME){
-            return {res: true, gitData: {username: process.env.GIT_USERNAME}}}
-        else{return {res: false, gitData: {username: ""}}}
+            return {res: true, gitData: {username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN}}}
+        else{return {res: false, gitData: {error: "not found"}}}
     })
   
 
@@ -136,10 +136,11 @@ async function createSetupWindow(){
     return new Promise((resolve) => {
         ipcMain.once("send-git-data", (event, args) => {
             //TO DO: complete with token?
-            process.env.GIT_USERNAME = args
-            fs.writeFileSync('.env',`GIT_USERNAME=${process.env.GIT_USERNAME}`)
+            process.env.GIT_USERNAME = args.gitUsername
+            process.env.GITHUB_TOKEN = args.gitToken
+            fs.writeFileSync('.env',`GIT_USERNAME=${process.env.GIT_USERNAME}\nGITHUB_TOKEN=${process.env.GITHUB_TOKEN}`)
             win.close()
-            resolve(process.env.GIT_USERNAME)
+            resolve({username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN})
         })
     })
     
@@ -177,5 +178,7 @@ app.on('window-all-closed', () => {
 // TESTS
 
 const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js')) 
-gitAPI.testOcto(process.env.GITHUB_TOKEN)
+// gitAPI.initConnection(process.env.GITHUB_TOKEN)
+gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
+gitAPI.getUserRepos(process.env.GIT_USERNAME)
 

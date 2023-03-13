@@ -38,6 +38,8 @@ body{
 
     padding-left: 15px;
     padding-right: 15px;
+
+    margin-bottom: 2%;
 }
 
 #separation-mark{
@@ -46,6 +48,33 @@ body{
 }
 
 #fillin-area-git-username{
+    background-color: var(--bg-color-lighter);
+    border: none;
+    appearance: none;
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-weight: bold;
+
+    font-size: 1.05em;
+}
+
+#setup-git-token{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    background-color: var(--bg-color-lighter);
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-weight: bold;
+
+    border-radius: 15px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#fillin-area-git-token{
     background-color: var(--bg-color-lighter);
     border: none;
     appearance: none;

@@ -70,7 +70,7 @@ signinButton.addEventListener("click", async () => {
 async function manageSetting(){
     const gitData = await window.api.openGitSetUpWidow()
 
-    document.getElementById("git-account-username-label").innerHTML = gitData
+    document.getElementById("git-account-username-label").innerHTML = gitData.username
     document.getElementById("bar-label").style.display = "flex"
     document.getElementById("connection-button").style.display = "none"
     document.getElementById("git-connected-label").innerHTML = " connected"
