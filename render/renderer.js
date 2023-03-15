@@ -89,39 +89,52 @@ var prevGitData = {}
 var elementAvatar
 var elementReposList
 
+function updateAvatar(username, imgSrc, webLink){
+    winsow.alert("coucou")
+        elementAvatar = document.createElement("a")
+        elementAvatar.id = "avatar-" + username
+        elementAvatar.href = webLink
+        var image = document.createElement("img")
+        image.src = imgSrc
+        elementAvatar.appendChild(image)
+        document.getElementById("user-avatar").appendChild(elementAvatar)        
+}
+
 function adapteDomToGitData(){
+    window.alert("enter")
     if(JSON.stringify(currentGitData) === JSON.stringify({})){
+        window.alert("enter 1")
         // Error
     }
     else{
         if(JSON.stringify(prevGitData) === JSON.stringify({})){
             // First receive -> recursive creation in the dom
-            elementAvatar = document.createElement(a)
-            elementAvatar.href = currentGitData.userData.html_url
-            var image = document.createElement(img)
-            image.src = currentGitData.userData.avatar
+            window.alert("enter 2")
+            updateAvatar(currentGitData.userData.username, currentGitData.userData.avatar, currentGitData.userData.html_url)
             
         }
         else{
             if(JSON.stringify(prevGitData) === JSON.stringify(currentGitData)){
+                window.alert("enter 3")
                 // DO nothing -> no change
             }
             else{
+                window.alert("enter 4")
                 // Compare currentGitData with prevGitData and update dom
             }
         }
     }
 }
 
-function fetchGitData(){
+async function fetchGitData(){
 
     if(isConnected()){
         prevGitData = currentGitData
-        currentGitData = window.git.getGitData()
+        currentGitData = await window.git.getGitData().then( res => {
+            currentGitData = res; adapteDomToGitData()
+        })
     
-        console.log(currentGitData)
-
-        adapteDomToGitData()
+        // adapteDomToGitData()
     }
     
 }
