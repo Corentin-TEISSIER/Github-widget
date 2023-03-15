@@ -1,6 +1,7 @@
 const { app, BrowserWindow, screen, Menu, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
+const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js'))
 require('dotenv').config()
 
 //dev var
@@ -45,6 +46,18 @@ const resizeWindow = (win, size, duration) => {
     }, 1);
 }
 
+const syncFetchGitData = async () => {
+    gitAPI.initConnection(process.env.GITHUB_TOKEN)
+    try{
+        const gitApiData = await gitAPI.fetchDataForApp(process.env.GIT_USERNAME)
+        console.log(gitApiData)
+        return gitApiData
+    }catch(error){
+        console.log(error)
+        return error
+    }
+}
+
 
 const createWindow = () => {
     var win = new BrowserWindow({
@@ -55,12 +68,13 @@ const createWindow = () => {
         resizable: true,
         transparent: true,
         opacity: windowOpacity,
-        frame: false,
+        frame: true,
+        // frame: false,
         x: shiftWindowLeft,
         y: shiftWindowTop,
         hasShadow: true,
         alwaysOnTop: false,
-        skipTaskbar: true,
+        skipTaskbar: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload', 'preload.js'),
             nodeIntegration: true
@@ -92,10 +106,13 @@ const createWindow = () => {
         const gitData = await createSetupWindow()
         return gitData
     })
-    ipcMain.handle("is-git-data-defined", (event) => {
+    ipcMain.handle("is-git-id-defined", (event) => {
         if(process.env.GIT_USERNAME){
             return {res: true, gitData: {username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN}}}
         else{return {res: false, gitData: {error: "not found"}}}
+    })
+    ipcMain.handle("get-git-data", (event) => {
+        syncFetchGitData()
     })
   
 
@@ -177,23 +194,7 @@ app.on('window-all-closed', () => {
 
 // TESTS
 
-const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js')) 
-gitAPI.initConnection(process.env.GITHUB_TOKEN)
-// gitAPI.testOcto(process.env.GIT_USERNAME, process.env.GITHUB_TOKEN)
-// gitAPI.getUserData(process.env.GIT_USERNAME)
-// gitAPI.getUserRepos(process.env.GIT_USERNAME)
-// gitAPI.getCommitsHistoryFromRepo(process.env.GIT_USERNAME, "test_repo")
+ 
 
-// const testGitAPI = async (username) => {
-//     try{
-//         const gitApiData = await gitAPI.fetchDataForApp(username)
-//         // Add test here if needed
-//     }catch(error){
-//         console.log(error)
-//     }
-// }
-// testGitAPI(process.env.GIT_USERNAME)
 
-const gitAppData = gitAPI.fetchDataForApp(process.env.GIT_USERNAME)
-console.log(gitAppData)
 

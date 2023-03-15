@@ -34,8 +34,7 @@ async function isConnected(){
     //manage check connection -> TO DO
 
     //change dom value
-    var connected = await window.api.isGitDataPresent()
-    console.log(connected) 
+    var connected = await window.api.isGitDataPresent() 
     connected.res? document.getElementById("bar-label").style.display = 'flex' : document.getElementById("connection-button").style.display = 'flex'
     connected.res? document.getElementById("connection-button").style.display = 'none' : document.getElementById("bar-label").style.display = 'none'
     if(connected.res) document.getElementById("git-account-username-label").innerHTML = connected.gitData.username
@@ -82,6 +81,53 @@ async function manageSetting(){
     window.api.resizeWindow({x:mainContainerWidth+25, y:mainContainerHeight+2})
 }
 
+
+// Update frequently git data
+var currentGitData = {}
+var prevGitData = {}
+
+var elementAvatar
+var elementReposList
+
+function adapteDomToGitData(){
+    if(JSON.stringify(currentGitData) === JSON.stringify({})){
+        // Error
+    }
+    else{
+        if(JSON.stringify(prevGitData) === JSON.stringify({})){
+            // First receive -> recursive creation in the dom
+            elementAvatar = document.createElement(a)
+            elementAvatar.href = currentGitData.userData.html_url
+            var image = document.createElement(img)
+            image.src = currentGitData.userData.avatar
+            
+        }
+        else{
+            if(JSON.stringify(prevGitData) === JSON.stringify(currentGitData)){
+                // DO nothing -> no change
+            }
+            else{
+                // Compare currentGitData with prevGitData and update dom
+            }
+        }
+    }
+}
+
+function fetchGitData(){
+
+    if(isConnected()){
+        prevGitData = currentGitData
+        currentGitData = window.git.getGitData()
+    
+        console.log(currentGitData)
+
+        adapteDomToGitData()
+    }
+    
+}
+
+fetchGitData()
+// setInterval(fetchGitData, 5000)
 
 
 

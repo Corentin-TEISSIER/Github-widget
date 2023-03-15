@@ -7,7 +7,6 @@ const initConnection = (token) => {
         octokit = new Octokit.Octokit({
             auth: token
         })
-        console.log("Octokit is functionnal")
     }catch(error){
         console.log("Octokit connection failed")
         console.log("   error : " + error)
@@ -22,7 +21,6 @@ const testOcto = async () => {
             owner: "octocat",
             repo: "Spoon-Knife",
         });
-        console.log("Octokit is functionnal")
     }
     catch(error){
         console.log("Octokit connection failed")

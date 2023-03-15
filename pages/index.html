@@ -8,6 +8,10 @@
   </head>
   <body>
     <div id="widget-main-container">
+      <div id="connection-button">
+        Sign In
+      </div>
+
       <h1 id="bar-label">
         <div id="gears-button-container">
           <img id="gears-button" src="../icon/gears-bg-lighter.png" alt="param">
@@ -16,9 +20,18 @@
         <span class="separator-mark"> : </span>
         <span id="git-connected-label"></span> 
       </h1>
-      <div id="connection-button">
-        Sign In
+      
+      <div id="app-body-container">
+        
+        <div id="user-repo-index">
+          <div id="user-avatar"></div>
+          <div id="user-repos-list"></div>
+        </div>
+
+        <div id="repo-commits-list"></div>
+
       </div>
+
     </div>
 
     <script type="text/javascript" src="../render/renderer.js"></script>
