@@ -48,14 +48,13 @@ const resizeWindow = (win, size, duration) => {
 
 const syncFetchGitData = async () => {
     gitAPI.initConnection(process.env.GITHUB_TOKEN)
+    var gitApiData
     try{
-        const gitApiData = await gitAPI.fetchDataForApp(process.env.GIT_USERNAME)
-        console.log(gitApiData)
-        return gitApiData
+        gitApiData = await gitAPI.fetchDataForApp(process.env.GIT_USERNAME)
     }catch(error){
-        console.log(error)
-        return error
+        throw error
     }
+    return gitApiData
 }
 
 
@@ -84,7 +83,10 @@ const createWindow = () => {
     win.loadFile('pages/index.html')
 
     // activate dev tools 
-    if(devToolActivate === true) {win.webContents.openDevTools()}
+    win.webContents.on('did-frame-finish-load', () => {
+        win.webContents.openDevTools()
+      })
+    // if(devToolActivate === true) {win.webContents.openDevTools()}
 
     win.webContents.on('dom-ready', () => {
         win.webContents.insertCSS(
@@ -111,8 +113,16 @@ const createWindow = () => {
             return {res: true, gitData: {username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN}}}
         else{return {res: false, gitData: {error: "not found"}}}
     })
-    ipcMain.handle("get-git-data", (event) => {
-        syncFetchGitData()
+    ipcMain.handle("get-git-data", async (event) => {
+        var gitData
+        try{
+            gitData = await syncFetchGitData()
+            console.log(gitData)
+        }catch(error){
+            console.log(error)
+        }
+        return gitData
+        
     })
   
 
@@ -143,6 +153,7 @@ async function createSetupWindow(){
         win.webContents.insertCSS(
             fs.readFileSync(path.join(__dirname, 'css', 'setupWindow.css'), 'utf8')
         )
+
     })
 
     //IPC on

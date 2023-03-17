@@ -89,38 +89,43 @@ var prevGitData = {}
 var elementAvatar
 var elementReposList
 
-function updateAvatar(username, imgSrc, webLink){
-    winsow.alert("coucou")
-        elementAvatar = document.createElement("a")
-        elementAvatar.id = "avatar-" + username
-        elementAvatar.href = webLink
-        var image = document.createElement("img")
-        image.src = imgSrc
-        elementAvatar.appendChild(image)
-        document.getElementById("user-avatar").appendChild(elementAvatar)        
+function updateAvatar(){
+    window.alert(currentGitData.userData.username)
+    var userAvatar = document.getElementById("user-avatar")
+    elementAvatar = document.createElement("a")
+    elementAvatar.id = "user-avatar-href"
+    elementAvatar.href = currentGitData.userData.html_url
+    var userImage = document.createElement("img")
+    userImage.id = "user-avatar-picture"
+    userImage.src = currentGitData.userData.avatar
+    elementAvatar.appendChild(userImage)
+    userAvatar.appendChild(elementAvatar)
+    elementAvatar.addEventListener('click', (event) => {
+        event.preventDefault()
+        window.api.openExternal(elementAvatar.href)
+    })
+    console.log("coucou")
 }
 
 function adapteDomToGitData(){
-    window.alert("enter")
     if(JSON.stringify(currentGitData) === JSON.stringify({})){
-        window.alert("enter 1")
-        // Error
+        // No current data -> need to fetch data
+        window.alert("1")
     }
     else{
         if(JSON.stringify(prevGitData) === JSON.stringify({})){
-            // First receive -> recursive creation in the dom
-            window.alert("enter 2")
-            updateAvatar(currentGitData.userData.username, currentGitData.userData.avatar, currentGitData.userData.html_url)
-            
+            // First fetch -> adapte the entire dom
+            window.alert("2")
+            updateAvatar()
         }
         else{
-            if(JSON.stringify(prevGitData) === JSON.stringify(currentGitData)){
-                window.alert("enter 3")
-                // DO nothing -> no change
+            if(JSON.stringify(currentGitData) === JSON.stringify(prevGitData)){
+                // No update -> nothing to add neither delete
+                window.alert("3")
             }
             else{
-                window.alert("enter 4")
-                // Compare currentGitData with prevGitData and update dom
+                // Some change made -> need to adapt the dom
+                window.alert("4")
             }
         }
     }
@@ -130,11 +135,8 @@ async function fetchGitData(){
 
     if(isConnected()){
         prevGitData = currentGitData
-        currentGitData = await window.git.getGitData().then( res => {
-            currentGitData = res; adapteDomToGitData()
-        })
-    
-        // adapteDomToGitData()
+        currentGitData = await window.git.getGitData()
+        adapteDomToGitData()
     }
     
 }
