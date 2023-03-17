@@ -1,5 +1,8 @@
 :root{
+    --bg-color-darker-2: #01060e;
+    --bg-color-darker-1: #11161e;
     --bg-color: #21262e;
+    --bg-color-lighter: #31363e;
     --purple-0: #6e5494;
     --purple-1: #4e3474;
     --gh-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
@@ -22,6 +25,7 @@ body {
 
 body #widget-main-container{
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     align-items: center;
@@ -79,3 +83,48 @@ body #git-connected-label{
     padding-right: 5px;
     padding-left: 5px;
 }
+
+
+/* App body container */
+#app-body-container{
+    display: flex;
+    flex-direction: row;
+}
+
+#user-repo-index{
+    display: flex;
+    flex-direction: column;
+}
+
+#user-avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#user-repos-list{
+    display: flex;
+    flex-direction: column;
+}
+
+#user-repos-list a{
+    font-family: var(--gh-font-family);
+    font-size: 2em;
+    color: white;
+    text-decoration: none;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    padding-left: 5px;
+    padding-right: 5px;
+
+    border-radius: 15px;
+    background-color: var(--bg-color-lighter);
+}
+
+#repo-commits-list{
+    display: flex;
+    flex-direction: column;
+}
+
+

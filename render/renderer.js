@@ -90,7 +90,6 @@ var elementAvatar
 var elementReposList
 
 function updateAvatar(){
-    window.alert(currentGitData.userData.username)
     var userAvatar = document.getElementById("user-avatar")
     elementAvatar = document.createElement("a")
     elementAvatar.id = "user-avatar-href"
@@ -99,12 +98,26 @@ function updateAvatar(){
     userImage.id = "user-avatar-picture"
     userImage.src = currentGitData.userData.avatar
     elementAvatar.appendChild(userImage)
-    userAvatar.appendChild(elementAvatar)
     elementAvatar.addEventListener('click', (event) => {
         event.preventDefault()
         window.api.openExternal(elementAvatar.href)
     })
-    console.log("coucou")
+    userAvatar.appendChild(elementAvatar)
+}
+
+function updateRepoList(){
+    elementReposList = document.getElementById("user-repos-list")
+    currentGitData.userRepos.map( repo => {
+        var repoLabel = document.createElement("a")
+        repoLabel.href = repo.html_url
+        repoLabel.innerHTML = repo.name
+        repoLabel.id = repo.name + "-repo-label"
+        repoLabel.addEventListener('click', (event) => {
+            event.preventDefault()
+            window.api.openExternal(repoLabel.href)
+        })
+        elementReposList.appendChild(repoLabel)
+    })
 }
 
 function adapteDomToGitData(){
@@ -117,6 +130,7 @@ function adapteDomToGitData(){
             // First fetch -> adapte the entire dom
             window.alert("2")
             updateAvatar()
+            updateRepoList()
         }
         else{
             if(JSON.stringify(currentGitData) === JSON.stringify(prevGitData)){
