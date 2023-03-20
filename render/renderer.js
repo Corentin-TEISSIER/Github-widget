@@ -3,29 +3,8 @@ window.api.ipcRendererToMainConnected("Connection IPC : Renderer -> Main : OK")
 
 
 // WINDOW RESIZEMENT
-const windowState = {
-    Bar: "bar",
-    Icon: "icon",
-    Menu: "menu",
-    Full: "full"
-}
-const windowSize = {
-    //tests
-    Bar: {x: 500, y: 500},
-    Icon: {x: 500, y: 800},
-    Menu: {x: 0, y: 0},
-    Full: {x: 0, y: 0}
-    //prod
-    // Bar: {x: 200, y: 25},
-    // Icon: {x: 200, y: 400},
-    // Menu: {x: 0, y: 0},
-    // Full: {x: 0, y: 0}
-}
-var currentWindowState = windowState.Bar
-const windowContainer = document.getElementById('widget-main-container')
+    // TO DO : use resize function from preload
 
-windowContainer.addEventListener("mouseenter", () => {window.api.resizeWindow(windowSize.Icon); currentWindowState = windowState.Icon})
-windowContainer.addEventListener("mouseleave", () => {window.api.resizeWindow(windowSize.Bar); currentWindowState = windowState.Bar})
 
 // GIT CONNECTION LABEL -> To Set with git rest api
 
@@ -114,9 +93,42 @@ function updateRepoList(){
         repoLabel.id = repo.name + "-repo-label"
         repoLabel.addEventListener('click', (event) => {
             event.preventDefault()
-            window.api.openExternal(repoLabel.href)
+            // window.api.openExternal(repoLabel.href)
         })
         elementReposList.appendChild(repoLabel)
+    })
+}
+
+function updateRepoCommits(){
+    var container = document.getElementById("commit-list-container")
+    currentGitData.userRepos.map( repo => {
+        var commitList = document.createElement("div")
+        commitList.className = "commit-history"
+        commitList.id = repo.name + "-commit-history"
+        commitList.style.display = "none"
+        repo.commitsHistory.map( history => {
+            var commit = document.createElement("div")
+            commit.class = "commit"
+            commit.innerHTML = history.message
+            commitList.appendChild(commit)
+        })
+        container.appendChild(commitList)
+    })
+}
+
+function linkRepoToCommitHistories(){
+    currentGitData.userRepos.map( repo => {
+        const repoButton = document.getElementById(repo.name + "-repo-label")
+        repoButton.addEventListener("click", () => {
+            const histories = document.getElementsByClassName("commit-history")
+            console.log(histories)
+            Array.prototype.slice.call(histories).map( history => {
+                history.style.display = "none"
+            })
+            console.log(histories)
+            const commitHistory = document.getElementById(repo.name + "-commit-history")
+            commitHistory.style.display = "flex"
+        })
     })
 }
 
@@ -128,9 +140,10 @@ function adapteDomToGitData(){
     else{
         if(JSON.stringify(prevGitData) === JSON.stringify({})){
             // First fetch -> adapte the entire dom
-            window.alert("2")
             updateAvatar()
             updateRepoList()
+            updateRepoCommits()
+            linkRepoToCommitHistories()
         }
         else{
             if(JSON.stringify(currentGitData) === JSON.stringify(prevGitData)){

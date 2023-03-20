@@ -13,8 +13,8 @@ var screenWidth = 0
 var screenHeight = 0
 // var windowWidth = 200
 // var windowHeight = 25
-var windowWidth = 600
-var windowHeight = 600
+var windowWidth = 700
+var windowHeight = 700
 var shift = 700
 var shiftWindowLeft = screenWidth - shift
 var shiftWindowTop = 0
@@ -67,7 +67,7 @@ const createWindow = () => {
         resizable: true,
         transparent: true,
         opacity: windowOpacity,
-        frame: true,
+        frame: false,
         // frame: false,
         x: shiftWindowLeft,
         y: shiftWindowTop,
@@ -86,7 +86,6 @@ const createWindow = () => {
     win.webContents.on('did-frame-finish-load', () => {
         win.webContents.openDevTools()
       })
-    // if(devToolActivate === true) {win.webContents.openDevTools()}
 
     win.webContents.on('dom-ready', () => {
         win.webContents.insertCSS(
