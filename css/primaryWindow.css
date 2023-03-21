@@ -181,6 +181,24 @@ body #git-connected-label{
     flex-direction: column;
     width: 100%;
     height: 100%;
+
+    padding : 2%;
 }
 
+
+.repo-history-label{
+    padding: 3%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--gh-font-family);
+    font-size: 2.5em; 
+    font-weight: bold;
+}
+
+.repo-history-label img{
+    height: 13px;
+    width: 13px;
+    padding-left: 10px;
+}
 
