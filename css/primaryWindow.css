@@ -2,7 +2,8 @@
     --bg-color-darker-2: #01060e;
     --bg-color-darker-1: #11161e;
     --bg-color: #21262e;
-    --bg-color-lighter: #31363e;
+    --bg-color-lighter-1: #31363e;
+    --bg-color-lighter-2: #41464e;
     --purple-0: #6e5494;
     --purple-1: #4e3474;
     --gh-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
@@ -149,7 +150,7 @@ body #git-connected-label{
     padding-bottom: 5px;
 
     border-radius: 15px;
-    background-color: var(--bg-color-lighter);
+    background-color: var(--bg-color-lighter-1);
 }
 
 #user-repos-list a:hover{
@@ -170,24 +171,32 @@ body #git-connected-label{
 #commit-list-container{
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-color-lighter);
+    background-color: var(--bg-color-lighter-1);
     width: 100%;
     height: 100%;
     border-radius: 15px;
+    max-height: 500px;
+
+    padding-bottom: 2%;
 }
 
 .commit-history{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    /* width: 100%; */
+    /* height: 100%; */
+    padding-bottom: 2%;
+    border-radius: 15px;
+    overflow: auto;
 
-    padding : 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    scrollbar-width: none;
 }
 
 
 .repo-history-label{
-    padding: 3%;
+    padding: 1.5%;
     display: none;
     align-items: center;
     justify-content: center;
@@ -202,3 +211,43 @@ body #git-connected-label{
     padding-left: 10px;
 }
 
+
+/* Commit shapes */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.commit{
+    border-radius: 15px;
+    background-color: var(--bg-color-lighter-2);
+
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    padding: 1%;
+}
+
+.commit-header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 1%;
+}
+
+.commit-header div{
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+.commit-header div img{
+    width: 12px;
+    height: 12px; 
+}
+
+.commit-message{
+    background-color: var(--bg-color-lighter-1);
+    border-radius: 15px;
+    padding: 1%;
+    padding-left: 3%;
+    font-size: 1.5em;
+}

@@ -122,7 +122,7 @@ function updateRepoCommits(){
         commitList.style.display = "none"
         repo.commitsHistory.map( history => {
             var commit = document.createElement("div")
-            commit.class = "commit"
+            commit.className = "commit"
             var commitHeader = document.createElement("div")
             commitHeader.className = "commit-header"
             commitHeader.style.display = "flex"
@@ -136,10 +136,14 @@ function updateRepoCommits(){
             var imgLinkCommit = document.createElement("img")
             imgLinkCommit.src = "../icon/external-link.png"
             imgLinkCommit.alt = "link"
+            var commitMessage = document.createElement("div")
+            commitMessage.className = "commit-message"
+            commitMessage.id = history.sha + "-commit-message"
+            commitMessage.innerHTML = history.message
             linkCommit.appendChild(imgLinkCommit)
             commitHeader.appendChild(linkCommit)
             commit.appendChild(commitHeader)
-            
+            commit.appendChild(commitMessage)
             commitList.appendChild(commit)
         })
         container.appendChild(commitList)
