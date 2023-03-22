@@ -84,6 +84,13 @@ function updateAvatar(){
     userAvatar.appendChild(elementAvatar)
 }
 
+function modifyAvatar(){
+    elementAvatar = document.getElementById("user-avatar")
+    elementAvatar.href = currentGitData.userData.html_url
+    avatar = document.getElementById("user-avatar-picture")
+    avatar.src = currentGitData.userData.avatar
+}
+
 function updateRepoList(){
     elementReposList = document.getElementById("user-repos-list")
     currentGitData.userRepos.map( repo => {
@@ -188,10 +195,25 @@ function linkRepoToCommitHistories(){
     })
 }
 
+function addRepoToDom(repo){
+    // TO DO
+    return false
+}
+
+function addCommitsToRepo(repoName, newCommitsArray){
+    // TO DO
+    return false
+}
+
+function deleteRepo(repoName){
+    // TO DO
+    return false
+}
+
 function adapteDomToGitData(){
     if(JSON.stringify(currentGitData) === JSON.stringify({})){
         // No current data -> need to fetch data
-        window.alert("1")
+        window.alert("ERROR: No data fetched. Please verify you connection and token configuration")
     }
     else{
         if(JSON.stringify(prevGitData) === JSON.stringify({})){
@@ -204,11 +226,43 @@ function adapteDomToGitData(){
         else{
             if(JSON.stringify(currentGitData) === JSON.stringify(prevGitData)){
                 // No update -> nothing to add neither delete
-                window.alert("3")
             }
             else{
                 // Some change made -> need to adapt the dom
-                window.alert("4")
+                
+                // Avatar change -> actually do nothing: the url of the avatar never change -> need to find a way to know when avatar change
+                if(JSON.stringify(currentGitData.userData) !== JSON.stringify(prevGitData.userData) ){
+                    window.alert("Update on avatar")
+                    modifyAvatar()
+                }
+
+                // Repo list change
+                if(JSON.stringify(currentGitData.userRepos) !== JSON.stringify(prevGitData.userRepos)){
+                    currentGitData.userRepos.map( repo => {
+                        const repoExist = prevGitData.userData.find(prevRepo => prevRepo.name === repo.name)
+                        if(repoExist === undefined){ 
+                            // Repo not found in previous git data -> need to add this new repo 
+                            addRepoToDom(repo)
+                        }
+                        if(repoExist !== undefined && JSON.stringify(repoExist.commitHistory) !== JSON.stringify(repo.commitHistory)){
+                            // Need to update repo's commit history
+                            var newCommits = []
+                            repo.commitHistory.map( currentCommit => {
+                                if(repoExist.commitHistory.find(commit => currentCommit.sha === commit.sha) === undefined){
+                                    newCommits.push(currentCommit)
+                                }
+                            })
+                            addCommitsToRepo(repo.name, newCommits)
+                        }
+                    })
+                    prevGitData.userRepos.map( repo => {
+                        const repoExist = currentGitData.userData.find(currentRepo => currentRepo.name === repo.name)
+                        if(repoExist === undefined){
+                            // Repo has been deleted -> need to be deleted from the dom
+                            deleteRepo(repo.name)
+                        }
+                    })
+                }
             }
         }
     }
@@ -225,7 +279,7 @@ async function fetchGitData(){
 }
 
 fetchGitData()
-// setInterval(fetchGitData, 5000)
+setInterval(fetchGitData, 5000)
 
 
 
