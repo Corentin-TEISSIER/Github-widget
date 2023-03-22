@@ -109,8 +109,14 @@ function updateRepoCommits(){
         repoLabel.innerHTML = repo.name
         var link = document.createElement("img")
         link.id = repo.name + "repo-link"
-        link.src = "../icon/external-link.png"
+        link.src = "../icon/external-link-white.png"
         link.alt = "link"
+        link.addEventListener("mouseenter", () => {
+            link.src = "../icon/external-link-bg.png"
+        })
+        link.addEventListener("mouseleave", () => {
+            link.src = "../icon/external-link-white.png"
+        })
         link.addEventListener("click", () => {
             window.api.openExternal(repo.html_url)
         })
@@ -133,8 +139,20 @@ function updateRepoCommits(){
             commitHeader.appendChild(sha)
             var linkCommit = document.createElement("div")
             linkCommit.className = "link-commit"
+            linkCommit.addEventListener("mouseenter", () => {
+                var extLink = document.getElementById(history.sha + "-link-external")
+                extLink.src = "../icon/external-link-bg.png"
+            })
+            linkCommit.addEventListener("mouseleave", () => {
+                var extLink = document.getElementById(history.sha + "-link-external")
+                extLink.src = "../icon/external-link-white.png"
+            })
+            linkCommit.addEventListener("click", () => {
+                window.api.openExternal(history.html_url)
+            })
             var imgLinkCommit = document.createElement("img")
-            imgLinkCommit.src = "../icon/external-link.png"
+            imgLinkCommit.id = history.sha + "-link-external"
+            imgLinkCommit.src = "../icon/external-link-white.png"
             imgLinkCommit.alt = "link"
             var commitMessage = document.createElement("div")
             commitMessage.className = "commit-message"

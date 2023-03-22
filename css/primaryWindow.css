@@ -98,6 +98,7 @@ body #git-connected-label{
     flex-direction: column;
 
     width: 100vw;
+    margin-top: 5%;
 }
 
 #user-repo-index{
@@ -105,7 +106,13 @@ body #git-connected-label{
     flex-direction: column;
     /* width: 30vw; */
     flex-grow: 1;
+    width: 150px;
+    min-width: 150px;
     max-width: 150px;
+    max-height: 500px;
+    padding-right: 2vw;
+    overflow: auto;
+
 }
 
 #user-avatar{
@@ -114,11 +121,12 @@ body #git-connected-label{
     align-items: center;
 
     padding: 10px;
+    align-self: center;
 }
 
 #user-avatar img{
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
 }
 
@@ -164,8 +172,6 @@ body #git-connected-label{
     justify-content: center;
     flex-direction: column;
     flex-grow: 4;
-
-    margin-left: 2vw;
 }
 
 #commit-list-container{
