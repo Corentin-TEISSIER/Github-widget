@@ -136,6 +136,8 @@ body #git-connected-label{
 }
 
 #user-repos-list a{
+    display: inline-block;
+
     font-family: var(--gh-font-family);
     font-size: 2em;
     color: white;
@@ -260,4 +262,15 @@ a:-webkit-any(:link) {
     padding: 1%;
     padding-left: 3%;
     font-size: 1.5em;
+}
+
+/* repo pellet and new commit management */
+
+.repo-pellet{
+    background-color: var(--purple-1);
+    width: 25%;
+    height: 25%;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 100%;
 }

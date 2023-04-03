@@ -5,7 +5,7 @@ const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js'))
 require('dotenv').config()
 
 //dev var
-const devToolActivate = false
+const devToolActivate = true
 
 // usefull values (try to set up when first window is ready)
     //Main window

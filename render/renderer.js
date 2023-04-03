@@ -2,38 +2,43 @@
 window.api.ipcRendererToMainConnected("Connection IPC : Renderer -> Main : OK")
 
 
+// colors
+var purple0Color = "#6e5494";
+var purple1Color = "#4e3474";
+var bgColorLighter2 = "#41464e";
+
 // WINDOW RESIZEMENT
-    // static big size
-    bigSize = {
-        x: 700, 
-        y: 590
-    }
-    function resizeSmall() {
-        const header = document.getElementById("bar-label")
-        const signIn = document.getElementById("connection-button")
-        size = {
-            x: Math.max(header.offsetWidth, signIn.offsetWidth) + 25,
-            y: Math.max(header.offsetHeight, signIn.offsetHeight) + 5
-        }
-        window.api.resizeWindow(size)
-    }
-    setTimeout(() => {
-        resizeSmall()
-    }, 100); 
-    // TO DO : use resize function from preload
-    const body = document.body
-    body.addEventListener("mouseenter", () => {
-        // const mainContainer = document.getElementById("widget-main-container")
-        // size = {
-        //     x: mainContainer.offsetHeight,
-        //     y: mainContainer.offsetWidth
-        // }
-        // window.api.resizeWindow(size)
-        window.api.resizeWindow(bigSize)
-    })
-    body.addEventListener("mouseleave", () => {
-        resizeSmall()
-    })
+    // // static big size
+    // bigSize = {
+    //     x: 700, 
+    //     y: 590
+    // }
+    // function resizeSmall() {
+    //     const header = document.getElementById("bar-label")
+    //     const signIn = document.getElementById("connection-button")
+    //     size = {
+    //         x: Math.max(header.offsetWidth, signIn.offsetWidth) + 25,
+    //         y: Math.max(header.offsetHeight, signIn.offsetHeight) + 5
+    //     }
+    //     window.api.resizeWindow(size)
+    // }
+    // setTimeout(() => {
+    //     resizeSmall()
+    // }, 100); 
+    // // TO DO : use resize function from preload
+    // const body = document.body
+    // body.addEventListener("mouseenter", () => {
+    //     // const mainContainer = document.getElementById("widget-main-container")
+    //     // size = {
+    //     //     x: mainContainer.offsetHeight,
+    //     //     y: mainContainer.offsetWidth
+    //     // }
+    //     // window.api.resizeWindow(size)
+    //     window.api.resizeWindow(bigSize)
+    // })
+    // body.addEventListener("mouseleave", () => {
+    //     resizeSmall()
+    // })
 
 // GIT CONNECTION LABEL -> To Set with git rest api
 
@@ -124,13 +129,12 @@ function updateRepoList(){
     elementReposList = document.getElementById("user-repos-list")
     currentGitData.userRepos.map( repo => {
         var repoLabel = document.createElement("a")
+        repoLabel.addEventListener("click", (event) => {
+            event.preventDefault()
+        })
         repoLabel.href = repo.html_url
         repoLabel.innerHTML = repo.name
         repoLabel.id = repo.name + "-repo-label"
-        repoLabel.addEventListener('click', (event) => {
-            event.preventDefault()
-            // window.api.openExternal(repoLabel.href)
-        })
         elementReposList.appendChild(repoLabel)
     })
 }
@@ -224,18 +228,26 @@ function linkRepoToCommitHistories(){
     })
 }
 
+function repoPelletElement(repoName){
+    var repoElement = document.getElementById(repoName + "-repo-label")
+    repoElement.style.border = "1px solid " + purple0Color
+    repoElement.addEventListener("click", () => {
+        repoElement.style.border = "none"
+    })
+}
+
 function addRepoToDom(repo){
     // add repo to repo list
     elementReposList = document.getElementById("user-repos-list")
     var repoLabel = document.createElement("a")
+    repoLabel.addEventListener("click", (event) => {
+        event.preventDefault()
+    })
     repoLabel.href = repo.html_url
     repoLabel.innerHTML = repo.name
     repoLabel.id = repo.name + "-repo-label"
-    repoLabel.addEventListener('click', (event) => {
-        event.preventDefault()
-        // window.api.openExternal(repoLabel.href)
-    })
     elementReposList.appendChild(repoLabel)
+    repoPelletElement(repo.name)
 
     // Add repo commit list to commit history list
     var container = document.getElementById("commit-list-container")
@@ -266,6 +278,10 @@ function addRepoToDom(repo){
     repo.commitsHistory.map( history => {
         var commit = document.createElement("div")
         commit.className = "commit"
+        commit.style.backgroundColor = purple0Color
+        commit.addEventListener("mouseenter", () => {
+            commit.style.backgroundColor = bgColorLighter2
+        })
         var commitHeader = document.createElement("div")
         commitHeader.className = "commit-header"
         commitHeader.style.display = "flex"
@@ -306,11 +322,16 @@ function addRepoToDom(repo){
 }
 
 function addCommitsToRepo(repoName, newCommitsArray){
+    repoPelletElement(repoName)
     var commitList = document.getElementById(repoName + "-commit-history")
     var prevLastCommit = commitList.firstChild
     newCommitsArray.map(newCommit => {
         var commit = document.createElement("div")
         commit.className = "commit"
+        commit.style.backgroundColor = purple0Color
+        commit.addEventListener("mouseenter", () => {
+            commit.style.backgroundColor = bgColorLighter2
+        })
         var commitHeader = document.createElement("div")
         commitHeader.className = "commit-header"
         commitHeader.style.display = "flex"
