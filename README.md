@@ -24,6 +24,8 @@ You can refer to "electron-forge make" options if you want to perosnalise you in
 
 Then you can find the application in the directory /out/github-widget-:platform/ of the project.
 
+You will also find an application installer 'github-widget-1.0.0 Setup' in the folder /out/make/path-to-plateform/.
+
 ### Development
 
 You first need to download the project. Then you must install the npm dependencies:
