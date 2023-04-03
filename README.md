@@ -26,6 +26,8 @@ Then you can find the application in the directory /out/github-widget-:platform/
 
 You will also find an application installer 'github-widget-1.0.0 Setup' in the folder /out/make/path-to-plateform/.
 
+NB: This project still have some troubles that need to be solved. If you install the app, you better should launch it as an administrator to get the access on some files (.env) and also maybe relaunch it once you setted the git data to see the changes.
+
 ### Development
 
 You first need to download the project. Then you must install the npm dependencies:
