@@ -16,10 +16,15 @@ This software is an easy way to keep an eye on the modifications made on your re
 ### Build the software
 
 You first need to download the project. Then you must install the npm dependencies:
+
 `cd /directory/of/the/project`
+
 `npm install`
+
 And to create the app package:
+
 `npx electron-forge make`
+
 You can refer to "electron-forge make" options if you want to perosnalise you installation package.
 
 Then you can find the application in the directory /out/github-widget-:platform/ of the project.
@@ -31,9 +36,13 @@ NB: This project still have some troubles that need to be solved. If you install
 ### Development
 
 You first need to download the project. Then you must install the npm dependencies:
+
 `cd /directory/of/the/project`
+
 `npm install`
+
 Then, to launch the app in dev:
+
 `npm start`
 
 Tips: the boolean 'devToolActivate' at the beginning of file 'main.js' could be set to true to display the devTools.
