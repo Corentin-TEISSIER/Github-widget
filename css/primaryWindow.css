@@ -223,6 +223,10 @@ body #git-connected-label{
     display: none;
 }
 
+a:-webkit-any(:link) {
+    text-decoration: none;
+}
+
 .commit{
     border-radius: 15px;
     background-color: var(--bg-color-lighter-2);

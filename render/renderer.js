@@ -3,8 +3,37 @@ window.api.ipcRendererToMainConnected("Connection IPC : Renderer -> Main : OK")
 
 
 // WINDOW RESIZEMENT
+    // static big size
+    bigSize = {
+        x: 700, 
+        y: 590
+    }
+    function resizeSmall() {
+        const header = document.getElementById("bar-label")
+        const signIn = document.getElementById("connection-button")
+        size = {
+            x: Math.max(header.offsetWidth, signIn.offsetWidth) + 25,
+            y: Math.max(header.offsetHeight, signIn.offsetHeight) + 5
+        }
+        window.api.resizeWindow(size)
+    }
+    setTimeout(() => {
+        resizeSmall()
+    }, 100); 
     // TO DO : use resize function from preload
-
+    const body = document.body
+    body.addEventListener("mouseenter", () => {
+        // const mainContainer = document.getElementById("widget-main-container")
+        // size = {
+        //     x: mainContainer.offsetHeight,
+        //     y: mainContainer.offsetWidth
+        // }
+        // window.api.resizeWindow(size)
+        window.api.resizeWindow(bigSize)
+    })
+    body.addEventListener("mouseleave", () => {
+        resizeSmall()
+    })
 
 // GIT CONNECTION LABEL -> To Set with git rest api
 
@@ -280,7 +309,6 @@ function addCommitsToRepo(repoName, newCommitsArray){
     var commitList = document.getElementById(repoName + "-commit-history")
     var prevLastCommit = commitList.firstChild
     newCommitsArray.map(newCommit => {
-        console.log(commit)
         var commit = document.createElement("div")
         commit.className = "commit"
         var commitHeader = document.createElement("div")
@@ -375,7 +403,6 @@ function adapteDomToGitData(){
                                     newCommits.push(currentCommit)
                                 }
                             })
-                            console.log(newCommits)
                             addCommitsToRepo(repo.name, newCommits)
                         }
                     })
@@ -395,7 +422,6 @@ function adapteDomToGitData(){
 async function fetchGitData(){
 
     if(isConnected()){
-        console.log(currentGitData)
         prevGitData = currentGitData
         currentGitData = await window.git.getGitData()
         adapteDomToGitData()
@@ -403,8 +429,13 @@ async function fetchGitData(){
     
 }
 
-fetchGitData()
-setInterval(fetchGitData, 5000)
+function runApp() {
+    fetchGitData()
+    setInterval(fetchGitData, 10000)
+}
+
+runApp()
+
 
 
 

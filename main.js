@@ -5,7 +5,7 @@ const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js'))
 require('dotenv').config()
 
 //dev var
-const devToolActivate = true
+const devToolActivate = false
 
 // usefull values (try to set up when first window is ready)
     //Main window
@@ -14,7 +14,7 @@ var screenHeight = 0
 // var windowWidth = 200
 // var windowHeight = 25
 var windowWidth = 700
-var windowHeight = 700
+var windowHeight = 580
 var shift = 700
 var shiftWindowLeft = screenWidth - shift
 var shiftWindowTop = 0
@@ -84,7 +84,7 @@ const createWindow = () => {
 
     // activate dev tools 
     win.webContents.on('did-frame-finish-load', () => {
-        win.webContents.openDevTools()
+        if(devToolActivate){win.webContents.openDevTools()}
       })
 
     win.webContents.on('dom-ready', () => {
@@ -98,8 +98,8 @@ const createWindow = () => {
         console.log(args)
     })
     ipcMain.on("resize-window", (event,size) => {
-        //win.setSize(size.x, size.y)
-        resizeWindow(win,size,250)
+        win.setSize(size.x, size.y)
+        //resizeWindow(win,size,250)
     })
 
     //IPC handle
