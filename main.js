@@ -5,7 +5,7 @@ const gitAPI = require(path.join(__dirname, 'modules', 'gitAPI.js'))
 require('dotenv').config()
 
 //dev var
-const devToolActivate = true
+const devToolActivate = false
 
 // usefull values (try to set up when first window is ready)
     //Main window
@@ -80,6 +80,8 @@ const createWindow = () => {
         }
     })
 
+    win.setTitle("Github widget")
+
     win.loadFile('pages/index.html')
 
     // activate dev tools 
@@ -141,6 +143,7 @@ async function createSetupWindow(){
             nodeIntegration: true
         }
     })
+    win.setTitle("Setup")
 
     win.loadFile('pages/setup.html')
 
@@ -161,12 +164,19 @@ async function createSetupWindow(){
 
     return new Promise((resolve) => {
         ipcMain.once("send-git-data", (event, args) => {
-            //TO DO: complete with token?
-            process.env.GIT_USERNAME = args.gitUsername
-            process.env.GITHUB_TOKEN = args.gitToken
-            fs.writeFileSync('.env',`GIT_USERNAME=${process.env.GIT_USERNAME}\nGITHUB_TOKEN=${process.env.GITHUB_TOKEN}`)
+            if(args != "cancel"){
+                process.env.GIT_USERNAME = args.gitUsername
+                process.env.GITHUB_TOKEN = args.gitToken
+                fs.writeFileSync('.env',`GIT_USERNAME=${process.env.GIT_USERNAME}\nGITHUB_TOKEN=${process.env.GITHUB_TOKEN}`)
+            }
             win.close()
-            resolve({username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN})
+            if(args != "cancel"){
+                resolve({username: process.env.GIT_USERNAME, token: process.env.GITHUB_TOKEN})
+            }
+            else{
+                resolve("cancel")
+            }
+            
         })
     })
     

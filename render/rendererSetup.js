@@ -8,3 +8,8 @@ registerButton.addEventListener("click", () => {
     const gitToken = document.getElementById("fillin-area-git-token").value 
     window.setupAPI.sendGitData({gitUsername, gitToken})
 })
+
+const cancelButton = document.getElementById("cancel-git-data-up")
+cancelButton.addEventListener("click", () => {
+    window.setupAPI.sendGitData("cancel")
+})

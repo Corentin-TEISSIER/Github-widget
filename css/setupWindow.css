@@ -85,6 +85,10 @@ body{
     font-size: 1.05em;
 }
 
+#flex-row-div{
+    display: flex;
+    flex-direction: row;
+}
 
 #set-git-data-up{
     display: inline-flex;
@@ -105,6 +109,30 @@ body{
 
 }
 
+#cancel-git-data-up{
+    display: inline-flex;
+
+    background-color: var(--bg-color-darker-2);
+    color: var(--bg-color);
+    font-family: var(--gh-font-family);
+    font-size: 1.1em;
+    font-weight: bold;
+
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    margin-top: 15%;
+    margin-right: 20px;
+
+}
+
 #set-git-data-up:hover{
+    background-color: var(--bg-color-darker-1);
+}
+
+#cancel-git-data-up:hover{
     background-color: var(--bg-color-darker-1);
 }

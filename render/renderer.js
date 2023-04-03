@@ -82,16 +82,19 @@ signinButton.addEventListener("click", async () => {
 async function manageSetting(){
     const gitData = await window.api.openGitSetUpWidow()
 
-    document.getElementById("git-account-username-label").innerHTML = gitData.username
-    document.getElementById("bar-label").style.display = "flex"
-    document.getElementById("connection-button").style.display = "none"
-    document.getElementById("git-connected-label").innerHTML = " connected"
-    document.getElementById("git-connected-label").style.color = 'green'
+    if(gitData != "cancel"){
+        document.getElementById("git-account-username-label").innerHTML = gitData.username
+        document.getElementById("bar-label").style.display = "flex"
+        document.getElementById("connection-button").style.display = "none"
+        document.getElementById("git-connected-label").innerHTML = " connected"
+        document.getElementById("git-connected-label").style.color = 'green'
 
-    const mainContainerWidth = document.getElementById("bar-label").getBoundingClientRect().width
-    const mainContainerHeight = document.getElementById("bar-label").getBoundingClientRect().height
+        const mainContainerWidth = document.getElementById("bar-label").getBoundingClientRect().width
+        const mainContainerHeight = document.getElementById("bar-label").getBoundingClientRect().height
 
-    window.api.resizeWindow({x:mainContainerWidth+25, y:mainContainerHeight+2})
+        window.api.resizeWindow({x:mainContainerWidth+25, y:mainContainerHeight+2})
+    }
+    
 }
 
 

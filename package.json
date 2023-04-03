@@ -1,7 +1,7 @@
 {
-  "name": "electron-test",
+  "name": "github-widget",
   "version": "1.0.0",
-  "description": "electron project to test electron features",
+  "description": "github widget to keep an eye on one's own github's changes",
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",
