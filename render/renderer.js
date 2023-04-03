@@ -88,11 +88,6 @@ async function manageSetting(){
         document.getElementById("connection-button").style.display = "none"
         document.getElementById("git-connected-label").innerHTML = " connected"
         document.getElementById("git-connected-label").style.color = 'green'
-
-        const mainContainerWidth = document.getElementById("bar-label").getBoundingClientRect().width
-        const mainContainerHeight = document.getElementById("bar-label").getBoundingClientRect().height
-
-        window.api.resizeWindow({x:mainContainerWidth+25, y:mainContainerHeight+2})
     }
     
 }

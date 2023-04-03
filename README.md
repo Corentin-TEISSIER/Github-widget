@@ -34,6 +34,23 @@ Then, to launch the app in dev:
 
 Tips: the boolean 'devToolActivate' at the beginning of file 'main.js' could be set to true to display the devTools.
 
+## How to setup the app
+
+Fist you need to create a personnal access token on github:
+- go on github.com.
+- connect on you account.
+- go to you account's settings.
+- go to <> Developer settings.
+- click on 'Personal access tokens/ Tokens (classic)'.
+- Click on 'Generate new token/ Generate new token (classic)'.
+- Fill the form, the only requirement to make the app working correctly is to tick all the repo area's boxes.
+- You personnal access token will be created and you will be able to copy it. Be careful, as soon as you'll leave this page you will not be able to check for you personnal access token value. 
+
+When you launch the application you can click on the setup button (if this is the first time you launch the app) or on the gear button. A new page will open on which you can register your github account's username and personnal token to access it.
+
+By clicking on "register", the data in the fillin areas will be used as new data to set the app up. If you let those area empty, it is a better option to click on "cancel" to do not apply empty strings as new set up data.
+
+
 ## Contact
 
 Corentin TEISSIER
