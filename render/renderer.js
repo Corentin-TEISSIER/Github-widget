@@ -111,7 +111,7 @@ function updateRepoCommits(){
     currentGitData.userRepos.map( repo => {
         var repoLabel = document.createElement("div")
         repoLabel.className = "repo-history-label"
-        repoLabel.id = repo.name + "repo-history-label"
+        repoLabel.id = repo.name + "-repo-history-label"
         repoLabel.style.display = "none"
         repoLabel.innerHTML = repo.name
         var link = document.createElement("img")
@@ -189,25 +189,148 @@ function linkRepoToCommitHistories(){
             })
             const commitHistory = document.getElementById(repo.name + "-commit-history")
             commitHistory.style.display = "flex"
-            const commitHistoryLabel = document.getElementById(repo.name + "repo-history-label")
+            const commitHistoryLabel = document.getElementById(repo.name + "-repo-history-label")
             commitHistoryLabel.style.display = "flex"
         })
     })
 }
 
 function addRepoToDom(repo){
-    // TO DO
-    return false
+    // add repo to repo list
+    elementReposList = document.getElementById("user-repos-list")
+    var repoLabel = document.createElement("a")
+    repoLabel.href = repo.html_url
+    repoLabel.innerHTML = repo.name
+    repoLabel.id = repo.name + "-repo-label"
+    repoLabel.addEventListener('click', (event) => {
+        event.preventDefault()
+        // window.api.openExternal(repoLabel.href)
+    })
+    elementReposList.appendChild(repoLabel)
+
+    // Add repo commit list to commit history list
+    var container = document.getElementById("commit-list-container")
+    var repoLabel = document.createElement("div")
+    repoLabel.className = "repo-history-label"
+    repoLabel.id = repo.name + "-repo-history-label"
+    repoLabel.style.display = "none"
+    repoLabel.innerHTML = repo.name
+    var link = document.createElement("img")
+    link.id = repo.name + "repo-link"
+    link.src = "../icon/external-link-white.png"
+    link.alt = "link"
+    link.addEventListener("mouseenter", () => {
+        link.src = "../icon/external-link-bg.png"
+    })
+    link.addEventListener("mouseleave", () => {
+        link.src = "../icon/external-link-white.png"
+    })
+    link.addEventListener("click", () => {
+        window.api.openExternal(repo.html_url)
+    })
+    repoLabel.appendChild(link)
+    container.appendChild(repoLabel)
+    var commitList = document.createElement("div")
+    commitList.className = "commit-history"
+    commitList.id = repo.name + "-commit-history"
+    commitList.style.display = "none"
+    repo.commitsHistory.map( history => {
+        var commit = document.createElement("div")
+        commit.className = "commit"
+        var commitHeader = document.createElement("div")
+        commitHeader.className = "commit-header"
+        commitHeader.style.display = "flex"
+        commitHeader.style.flexDirection = "row"
+        
+        var sha = document.createElement("div")
+        sha.innerHTML = history.sha
+        commitHeader.appendChild(sha)
+        var linkCommit = document.createElement("div")
+        linkCommit.className = "link-commit"
+        linkCommit.addEventListener("mouseenter", () => {
+            var extLink = document.getElementById(history.sha + "-link-external")
+            extLink.src = "../icon/external-link-bg.png"
+        })
+        linkCommit.addEventListener("mouseleave", () => {
+            var extLink = document.getElementById(history.sha + "-link-external")
+            extLink.src = "../icon/external-link-white.png"
+        })
+        linkCommit.addEventListener("click", () => {
+            window.api.openExternal(history.html_url)
+        })
+        var imgLinkCommit = document.createElement("img")
+        imgLinkCommit.id = history.sha + "-link-external"
+        imgLinkCommit.src = "../icon/external-link-white.png"
+        imgLinkCommit.alt = "link"
+        var commitMessage = document.createElement("div")
+        commitMessage.className = "commit-message"
+        commitMessage.id = history.sha + "-commit-message"
+        commitMessage.innerHTML = history.message
+        linkCommit.appendChild(imgLinkCommit)
+        commitHeader.appendChild(linkCommit)
+        commit.appendChild(commitHeader)
+        commit.appendChild(commitMessage)
+        commitList.appendChild(commit)
+    })
+    container.appendChild(commitList)
+    linkRepoToCommitHistories()
 }
 
 function addCommitsToRepo(repoName, newCommitsArray){
-    // TO DO
-    return false
+    var commitList = document.getElementById(repoName + "-commit-history")
+    var prevLastCommit = commitList.firstChild
+    newCommitsArray.map(newCommit => {
+        console.log(commit)
+        var commit = document.createElement("div")
+        commit.className = "commit"
+        var commitHeader = document.createElement("div")
+        commitHeader.className = "commit-header"
+        commitHeader.style.display = "flex"
+        commitHeader.style.flexDirection = "row"
+        
+        var sha = document.createElement("div")
+        sha.innerHTML = newCommit.sha
+        commitHeader.appendChild(sha)
+        var linkCommit = document.createElement("div")
+        linkCommit.className = "link-commit"
+        linkCommit.addEventListener("mouseenter", () => {
+            var extLink = document.getElementById(newCommit.sha + "-link-external")
+            extLink.src = "../icon/external-link-bg.png"
+        })
+        linkCommit.addEventListener("mouseleave", () => {
+            var extLink = document.getElementById(newCommit.sha + "-link-external")
+            extLink.src = "../icon/external-link-white.png"
+        })
+        linkCommit.addEventListener("click", () => {
+            window.api.openExternal(newCommit.html_url)
+        })
+        var imgLinkCommit = document.createElement("img")
+        imgLinkCommit.id = newCommit.sha + "-link-external"
+        imgLinkCommit.src = "../icon/external-link-white.png"
+        imgLinkCommit.alt = "link"
+        var commitMessage = document.createElement("div")
+        commitMessage.className = "commit-message"
+        commitMessage.id = newCommit.sha + "-commit-message"
+        commitMessage.innerHTML = newCommit.message
+        linkCommit.appendChild(imgLinkCommit)
+        commitHeader.appendChild(linkCommit)
+        commit.appendChild(commitHeader)
+        commit.appendChild(commitMessage)
+        commitList.insertBefore(commit, prevLastCommit)
+    })
 }
 
 function deleteRepo(repoName){
-    // TO DO
-    return false
+    // delete from repo list
+    var repoList = document.getElementById("user-repos-list")
+    var repoToRemove = document.getElementById(repoName + "-repo-label")
+    repoList.removeChild(repoToRemove)
+    // delete commit history
+    var commitList = document.getElementById("commit-list-container")
+    var commitHistoryLabelToRemove = document.getElementById(repoName + "-repo-history-label")
+    var commitHistoryToRemove = document.getElementById(repoName + "-commit-history")
+    commitList.removeChild(commitHistoryLabelToRemove) 
+    commitList.removeChild(commitHistoryToRemove)
 }
 
 function adapteDomToGitData(){
@@ -239,24 +362,25 @@ function adapteDomToGitData(){
                 // Repo list change
                 if(JSON.stringify(currentGitData.userRepos) !== JSON.stringify(prevGitData.userRepos)){
                     currentGitData.userRepos.map( repo => {
-                        const repoExist = prevGitData.userData.find(prevRepo => prevRepo.name === repo.name)
+                        const repoExist = prevGitData.userRepos.find(prevRepo => prevRepo.name === repo.name)
                         if(repoExist === undefined){ 
                             // Repo not found in previous git data -> need to add this new repo 
                             addRepoToDom(repo)
                         }
-                        if(repoExist !== undefined && JSON.stringify(repoExist.commitHistory) !== JSON.stringify(repo.commitHistory)){
+                        if(repoExist !== undefined && JSON.stringify(repoExist.commitsHistory) !== JSON.stringify(repo.commitsHistory)){
                             // Need to update repo's commit history
                             var newCommits = []
-                            repo.commitHistory.map( currentCommit => {
-                                if(repoExist.commitHistory.find(commit => currentCommit.sha === commit.sha) === undefined){
+                            repo.commitsHistory.map( currentCommit => {
+                                if(repoExist.commitsHistory.find(commit => currentCommit.sha === commit.sha) === undefined){
                                     newCommits.push(currentCommit)
                                 }
                             })
+                            console.log(newCommits)
                             addCommitsToRepo(repo.name, newCommits)
                         }
                     })
                     prevGitData.userRepos.map( repo => {
-                        const repoExist = currentGitData.userData.find(currentRepo => currentRepo.name === repo.name)
+                        const repoExist = currentGitData.userRepos.find(currentRepo => currentRepo.name === repo.name)
                         if(repoExist === undefined){
                             // Repo has been deleted -> need to be deleted from the dom
                             deleteRepo(repo.name)
@@ -271,6 +395,7 @@ function adapteDomToGitData(){
 async function fetchGitData(){
 
     if(isConnected()){
+        console.log(currentGitData)
         prevGitData = currentGitData
         currentGitData = await window.git.getGitData()
         adapteDomToGitData()

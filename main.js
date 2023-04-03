@@ -116,7 +116,6 @@ const createWindow = () => {
         var gitData
         try{
             gitData = await syncFetchGitData()
-            console.log(gitData)
         }catch(error){
             console.log(error)
         }
